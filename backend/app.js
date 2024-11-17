@@ -46,6 +46,9 @@ mongoose.connect(process.env.MONGO_URI).then((res) => {
   console.log("Connected to MongoDB");
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 const server = http.createServer(app);
 
 server.listen(3000, () => {
