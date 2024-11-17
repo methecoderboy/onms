@@ -6,8 +6,9 @@ let activeUsers = [];
 const InitSocket = (server) => {
   io = new Server(server, {
     cors: {
-      origin: "*",
+      origin: "https://onms-client.vercel.app/",
       methods: ["GET", "POST"],
+      optionSuccessStatus:200
     },
     allowEIO3: true,
   });
