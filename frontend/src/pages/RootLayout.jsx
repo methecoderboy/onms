@@ -1,14 +1,14 @@
-import { useEffect } from "react";
+//import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { connectSocket, socket } from "../lib/socket";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAllNotices } from "../app/slices/notice";
+//import { connectSocket, socket } from "../lib/socket";
+//import { useDispatch, useSelector } from "react-redux";
+//import { fetchAllNotices } from "../app/slices/notice";
 
 function RootLayout() {
-  const { user } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
+  //const { user } = useSelector((state) => state.auth);
+ // const dispatch = useDispatch();
 
-  useEffect(() => {
+  {/* useEffect(() => {
     document.title = "ONMS";
     if (!socket) {
       connectSocket(user?._id);
@@ -25,7 +25,7 @@ function RootLayout() {
       socket?.off("connection");
       socket?.off("new_notice");
     };
-  }, [user, dispatch]);
+  }, [user, dispatch]); */}
 
   return (
     <div className="h-full w-full">
