@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 
 let socket;
-const url = import.meta.env.SERVER_URL;
+const url = https://onms.onrender.com;
 
 const connectSocket = (user_id) => {
   socket = io(url, {
