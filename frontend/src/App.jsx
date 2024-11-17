@@ -79,7 +79,7 @@ function App() {
     }
   );
 
-  const { user, isLoggedIn } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {

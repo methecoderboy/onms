@@ -27,15 +27,21 @@ import { formatDistanceToNow } from "date-fns";
 import { fetchAllNotices, selectNotice } from "../app/slices/notice";
 import { useEffect } from "react";
 import DisplayNotice from "./DisplayNotice";
+import { Navigate } from "react-router-dom";
 
 function AdminView() {
   const { sentNotices } = useSelector((state) => state.notice);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const items = sentNotices;
 
   useEffect(() => {
     dispatch(fetchAllNotices());
   }, [dispatch]);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="h-full w-[99%] overflow-auto  flex flex-col items-center overflow-x-hidden mx-auto">

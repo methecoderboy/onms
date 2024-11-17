@@ -36,11 +36,12 @@ import {
   selectNotice,
 } from "../app/slices/notice";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import DisplayNotice from "./DisplayNotice";
 
 function SentNoticeList() {
   const { sentNotices } = useSelector((state) => state.notice);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [items, setItems] = useState(sentNotices);
@@ -59,6 +60,10 @@ function SentNoticeList() {
   useEffect(() => {
     dispatch(fetchSentNotices());
   }, [dispatch]);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="h-full w-[99%] overflow-auto  flex flex-col items-center overflow-x-hidden mx-auto">

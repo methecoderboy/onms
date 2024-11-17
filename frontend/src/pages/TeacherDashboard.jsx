@@ -4,10 +4,14 @@ import img8 from "../assets/img8.png";
 import img9 from "../assets/img9.png";
 import img10 from "../assets/img10.png";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function TeacherDashboard() {
   const { user } = useSelector((state) => state.auth);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   const navigate = useNavigate();
 

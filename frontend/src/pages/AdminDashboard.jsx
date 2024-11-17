@@ -6,7 +6,11 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function AdminDashboard() {
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   if (user.role !== "admin") {
     return <Navigate to={"/"} />;

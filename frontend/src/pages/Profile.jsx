@@ -11,9 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { changePassword } from "../app/slices/notice";
+import { Navigate } from "react-router-dom";
 
 function Profile() {
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const dispatch = useDispatch();
@@ -27,6 +28,11 @@ function Profile() {
     dispatch(changePassword({ newPassword: password }));
     alert("Password Changed Successfully");
   };
+
+  if (!isLoggedIn) {
+    return <Navigate to="/auth/login" />;
+  }
+
   return (
     <div className="flex h-full w-full">
       <div className="h-full lg:w-[320px] w-20 border-r-2">

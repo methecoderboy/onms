@@ -10,10 +10,16 @@ import NoticeList from "./NoticeList";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllNotices } from "../app/slices/notice";
 import DisplayNotice from "./DisplayNotice";
+import { Navigate } from "react-router-dom";
 
 function Dashboard() {
   const dispatch = useDispatch();
   const { selectedNotice } = useSelector((state) => state.notice);
+  const { isLoggedIn } = useSelector((state) => state.auth);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   useEffect(() => {
     document.title = "Dashboard";

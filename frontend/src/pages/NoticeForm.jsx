@@ -57,7 +57,7 @@ function NoticeForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { role } = useSelector((state) => state.auth);
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -85,6 +85,10 @@ function NoticeForm() {
     setRollNumber("");
     setEmail("");
   };
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   if (role === "student") {
     return <Navigate to="/student/dashboard" />;

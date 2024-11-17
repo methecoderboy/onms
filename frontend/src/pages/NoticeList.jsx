@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatDistanceToNow } from "date-fns";
 import { selectNotice } from "../app/slices/notice";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 const Categories = [
   "general",
@@ -40,6 +41,7 @@ const Categories = [
 
 function NoticeList() {
   const { notices } = useSelector((state) => state.notice);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   const [items, setItems] = useState(notices);
@@ -63,6 +65,10 @@ function NoticeList() {
     // console.log(from, to, category);
     // setItems(items.filter((item) => item.category === category));
   };
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <>

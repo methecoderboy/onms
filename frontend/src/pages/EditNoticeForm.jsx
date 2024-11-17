@@ -43,7 +43,7 @@ function EditNoticeForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { role } = useSelector((state) => state.auth);
+  const { role, isLoggedIn } = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,6 +57,10 @@ function EditNoticeForm() {
     await dispatch(updateNotice(notice));
     navigate("/notice/sent-notices");
   };
+
+  if (!isLoggedIn) {
+    return <Navigate to="/auth/login" />;
+  }
 
   if (role === "student") {
     return <Navigate to="/student/dashboard" />;
