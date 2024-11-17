@@ -1,0 +1,16 @@
+.App {
+  height: 100svh;
+  width: 100svw;
+}
+
+@media only screen and (max-width: 1024px) {
+  .show {
+    display: none;
+    overflow: hidden;
+  }
+
+  .notice-list {
+    display: none;
+
+  }
+}

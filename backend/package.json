@@ -1,0 +1,28 @@
+{
+  "name": "onms",
+  "version": "1.0.0",
+  "description": "This is backend for ONMS project.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "aftab alam",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.1",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.2.0",
+    "nodemon": "^3.1.7"
+  }
+}
