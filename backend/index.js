@@ -18,6 +18,7 @@ app.use(
     origin:"https://onms-client.vercel.app/",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
+    optionSuccessStatus:200
   })
 );
 
