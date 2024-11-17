@@ -9,7 +9,9 @@ const InitSocket = (server) => {
       origin: "*",
       methods: ["GET", "POST"],
       credentials: true,
+       allowedHeaders:["Access-Control-Allow-Origin"]
     },
+    allowEIO3: true,
   });
 
   io.on("connection", (socket) => {
