@@ -8,8 +8,6 @@ const InitSocket = (server) => {
     cors: {
       origin: "*",
       methods: ["GET", "POST"],
-      credentials: true,
-       allowedHeaders:["Access-Control-Allow-Origin"]
     },
     allowEIO3: true,
   });
