@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://onms.onrender.com";
 
 export const Axios = axios.create({
   baseURL: baseUrl,
