@@ -28,10 +28,6 @@ const {
 } = require("./lib/helper");
 const { InitSocket } = require("./lib/socket");
 
-// createAdmins(1);
-// createTeachers(20);
-// createStudents(20);
-
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
