@@ -14,10 +14,10 @@ const InitSocket = (server) => {
 
   io.on("connection", (socket) => {
     const { user_id } = socket.handshake.query;
+    console.log("User connected", user_id);
 
     activeUsers.push({ user_id, socket_id: socket.id });
     socket.on("disconnect", () => {
-      console.log("User disconnected");
       activeUsers = activeUsers.filter((user) => user.user_id !== user_id);
     });
   });

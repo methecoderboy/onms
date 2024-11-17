@@ -9,6 +9,13 @@ const Admin = require("../models/admin");
 
 const router = Router();
 
+const cookieOptions = {
+  maxAge: 15 * 24 * 60 * 60 * 1000,
+  sameSite: "none",
+  httpOnly: true,
+  secure: true,
+};
+
 router.post("/login", async (req, res) => {
   const { email, rollnumber, password, role } = req.body;
   let user;
@@ -40,7 +47,7 @@ router.post("/login", async (req, res) => {
   }
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie("onms-token", token, { httpOnly: true });
+  res.cookie("onms-token", token, cookieOptions);
   res.json({
     success: true,
     message: "User logged in",
@@ -49,35 +56,17 @@ router.post("/login", async (req, res) => {
   });
 });
 
-//   console.log(email, password);
-//   const user = await User.findOne({ email });
-//   if (!user) {
-//     return res.status(400).json({ success: false, message: "User not found" });
-//   }
-//   if (!correctPassword(password, user.password)) {
-//     return res
-//       .status(400)
-//       .json({ success: false, message: "Invalid password" });
-//   }
-//   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-//   res.cookie("onms-token", token, {
-//     httpOnly: true,
-//   });
-//   res.json({ success: true, message: "User logged in", user: user });
-// });
-
-// router.use(isAuthenticated);
-
-// router.use((req, res, next) => {
-//   const token = req.cookies["onms-token"];
-//   if (!token) {
-//     return res.status(401).json({ success: false, message: "Unauthorized" });
-//   }
-
-//   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//   console.log(decoded);
-//   next();
-// });
+router.get("/logout", async (req, res) => {
+  return res
+    .status(200)
+    .cookie("viby-token", "", {
+      maxAge: 0,
+      sameSite: "none",
+      httpOnly: true,
+      secure: true,
+    })
+    .json({ success: true, message: "Logged out" });
+});
 
 router.use(isAuthenticated);
 

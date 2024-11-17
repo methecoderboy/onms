@@ -20,7 +20,7 @@ function MainLayout() {
     return <Navigate to={"/student/dashboard"} />;
   }
 
-  return <div className="h-full w-full"></div>;
+  return <Navigate to={"/"} />;
 }
 
 export default MainLayout;

@@ -3,18 +3,31 @@ import img7 from "../assets/img7.png";
 import img8 from "../assets/img8.png";
 import img9 from "../assets/img9.png";
 import img10 from "../assets/img10.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/Button";
+import { Logout } from "../app/slices/auth";
+import { useEffect } from "react";
+import { fetchSentNotices } from "../app/slices/notice";
 
 function TeacherDashboard() {
   const { user } = useSelector((state) => state.auth);
   const { isLoggedIn } = useSelector((state) => state.auth);
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchSentNotices());
+  }, [dispatch]);
 
   if (!isLoggedIn) {
     return <Navigate to="/auth/login" />;
   }
+
+  if (user.role !== "teacher") {
+    return <Navigate to="/" />;
+  }
+
   return (
     <div className="h-full w-ful bg-slate-300">
       <header className="py-4 px-4 flex items-center justify-between ">
@@ -23,7 +36,15 @@ function TeacherDashboard() {
           <span className="text-md   font-medium cursor-pointer text-black">
             {user.name}
           </span>
-          <Power size={20} color="red" className="cursor-pointer" />
+          <Button
+            variant="secondary"
+            onClick={() => {
+              dispatch(Logout());
+            }}
+          >
+            <Power size={20} color="red" className="cursor-pointer" />{" "}
+            <span>Logout</span>
+          </Button>
         </div>
       </header>
       <main className="px-12 py-14 flex justify-evenly flex-wrap gap-8">

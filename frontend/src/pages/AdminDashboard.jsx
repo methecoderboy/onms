@@ -2,11 +2,14 @@ import { Power } from "lucide-react";
 import img7 from "../assets/img7.png";
 import img8 from "../assets/img8.png";
 import img9 from "../assets/img9.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { Button } from "@/components/ui/Button";
+import { Logout } from "../app/slices/auth";
 
 function AdminDashboard() {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   if (!isLoggedIn) {
     return <Navigate to={"/auth/login"} />;
@@ -24,7 +27,15 @@ function AdminDashboard() {
           <span className="text-md   font-medium cursor-pointer text-black">
             {user.name}
           </span>
-          <Power size={20} color="red" className="cursor-pointer" />
+          <Button
+            variant="secondary"
+            onClick={() => {
+              dispatch(Logout());
+            }}
+          >
+            <Power size={20} color="red" className="cursor-pointer" />{" "}
+            <span>Logout</span>
+          </Button>
         </div>
       </header>
       <main className="px-12 py-14 flex justify-evenly flex-wrap gap-8">

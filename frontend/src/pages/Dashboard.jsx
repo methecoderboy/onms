@@ -15,7 +15,7 @@ import { Navigate } from "react-router-dom";
 function Dashboard() {
   const dispatch = useDispatch();
   const { selectedNotice } = useSelector((state) => state.notice);
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     document.title = "Dashboard";
@@ -24,6 +24,10 @@ function Dashboard() {
 
   if (!isLoggedIn) {
     return <Navigate to={"/auth/login"} />;
+  }
+
+  if (user.role !== "student") {
+    return <Navigate to={"/"} />;
   }
 
   return (

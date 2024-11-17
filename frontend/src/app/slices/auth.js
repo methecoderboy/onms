@@ -42,3 +42,15 @@ export const Login = createAsyncThunk(
     }
   }
 );
+
+export const Logout = createAsyncThunk(
+  "/auth/logut",
+  async (_, { dispatch }) => {
+    try {
+      await Axios.get("/auth/logout", { withCredentials: true });
+      dispatch(slice.actions.logout());
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);

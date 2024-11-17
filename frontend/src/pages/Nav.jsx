@@ -1,49 +1,15 @@
 /* eslint-disable react/prop-types */
-import { BellDot, CircleUser, Settings } from "lucide-react";
+import { BellDot, CircleUser, Power } from "lucide-react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-// import {
-//   Accordion,
-//   AccordionContent,
-//   AccordionItem,
-//   AccordionTrigger,
-// } from "@/components/ui/accordion";
+import { Logout } from "../app/slices/auth";
 
-// import { cn } from "@/lib/utils";
-
-// const NavItems = [
-//   {
-//     icon: <BellDot size={16} />,
-//     text: "All Notices",
-//   },
-//   {
-//     icon: <Send size={16} />,
-//     text: "Sent",
-//   },
-//   {
-//     icon: <Star size={16} />,
-//     text: "Starred",
-//   },
-//   {
-//     icon: <Settings size={16} />,
-//     text: "Settings",
-//   },
-// ];
 const NavItems = [
   {
     Icon: BellDot,
     text: "All Notices",
     to: "/student/dashboard",
   },
-  // {
-  //   Icon: Send,
-  //   text: "Sent",
-  //   to: "/student/sent",
-  // },
-  // {
-  //   Icon: Star,
-  //   text: "Starred",
-  //   to: "/student/starred",
-  // },
   {
     Icon: CircleUser,
     text: "My Profile",
@@ -52,6 +18,7 @@ const NavItems = [
 ];
 
 function Nav() {
+  const dispatch = useDispatch();
   return (
     <nav className="navbar h-full w-full flex flex-col gap-4">
       <header className="lg:pl-6 py-2 flex items-center lg:justify-start justify-center gap-2 border-b-2">
@@ -76,6 +43,20 @@ function Nav() {
             </NavLink>
           </li>
         ))}
+        <li className="h-9 w-10 lg:w-full ">
+          <div
+            className={
+              "flex items-center gap-3 h-full w-full rounded-sm bg-white  lg:justify-start justify-center lg:px-2 cursor-pointer"
+            }
+            onClick={() => {
+              dispatch(Logout());
+            }}
+          >
+            <Power size={18} color="red" />
+
+            <span className="text-sm font-medium lg:block hidden">Logout</span>
+          </div>
+        </li>
       </ul>
     </nav>
   );

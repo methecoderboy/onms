@@ -30,10 +30,10 @@ import DisplayNotice from "./DisplayNotice";
 import { Navigate } from "react-router-dom";
 
 function AdminView() {
-  const { sentNotices } = useSelector((state) => state.notice);
+  const { notices } = useSelector((state) => state.notice);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const items = sentNotices;
+  const items = notices;
 
   useEffect(() => {
     dispatch(fetchAllNotices());
@@ -112,36 +112,36 @@ function AdminView() {
         <ScrollArea className="h-full w-full">
           <div className="flex flex-col gap-2 p-4 pt-1 bg-white overflow-auto">
             {items.map((item) => (
-              <Dialog key={item.subject}>
+              <Dialog key={item?.subject}>
                 <DialogTrigger>
                   <div
-                    key={item.id}
+                    key={item?.id}
                     className={cn(
                       "flex flex-col  items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent cursor-pointer "
                     )}
                     onClick={() => {
-                      dispatch(selectNotice(item._id));
+                      dispatch(selectNotice(item?._id));
                     }}
                   >
                     <div className="flex w-full flex-col gap-1">
                       <div className="flex items-center">
                         <div className="flex items-center gap-2">
-                          <div className="font-semibold">{item.title}</div>
+                          <div className="font-semibold">{item?.title}</div>
                         </div>
                         <div className={cn("ml-auto text-xs")}>
-                          {formatDistanceToNow(item.updatedAt, {
+                          {/* {formatDistanceToNow(item?.updatedAt, {
                             addSuffix: true,
-                          })}
+                          })} */}
                         </div>
                       </div>
-                      <div className="text-xs font-medium">{item.subject}</div>
+                      <div className="text-xs font-medium">{item?.subject}</div>
                     </div>
                     <div className="line-clamp-2 text-xs text-muted-foreground">
-                      {item.content.substring(0, 300)}
+                      {item?.content.substring(0, 300)}
                     </div>
                     <div className="w-full flex items-center  pt-2 gap-2">
                       <div className="flex items-center gap-2 w-full">
-                        <Badge>{item.category}</Badge>
+                        <Badge>{item?.category}</Badge>
                       </div>
                     </div>
                   </div>

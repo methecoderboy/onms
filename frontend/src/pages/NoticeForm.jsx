@@ -73,7 +73,7 @@ function NoticeForm() {
     };
 
     dispatch(createNotice(notice));
-    window.alert("Notice Created Successfully");
+    window.history.back();
     setTitle("");
     setSubject("");
     setContent("");
