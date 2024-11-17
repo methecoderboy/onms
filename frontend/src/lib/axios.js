@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://onms.vercel.app/";
 
 export const Axios = axios.create({
   baseURL: baseUrl,
