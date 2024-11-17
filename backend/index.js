@@ -23,10 +23,9 @@ app.use(function(req, res, next) {
 
 app.use(
   cors({
-    origin:"https://onms-client.vercel.app/",
+    origin: "https://onms-client.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
-    optionSuccessStatus:200
   })
 );
 
