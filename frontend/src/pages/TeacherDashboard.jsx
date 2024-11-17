@@ -13,7 +13,7 @@ function TeacherDashboard() {
   const navigate = useNavigate();
 
   if (!isLoggedIn) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/auth/login" />;
   }
   return (
     <div className="h-full w-ful bg-slate-300">

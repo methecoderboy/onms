@@ -40,7 +40,7 @@ function AdminView() {
   }, [dispatch]);
 
   if (!isLoggedIn) {
-    return <Navigate to="/login" />;
+    return <Navigate to={"/auth/login"} />;
   }
 
   return (
