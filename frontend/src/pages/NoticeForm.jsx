@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNotice } from "../app/slices/notice";
 import { MoveLeft } from "lucide-react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const recps = [
   "students",
@@ -55,7 +55,6 @@ function NoticeForm() {
   const [content, setContent] = useState("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { role, isLoggedIn } = useSelector((state) => state.auth);
 

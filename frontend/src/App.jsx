@@ -1,13 +1,7 @@
-import {
-  createBrowserRouter,
-  Navigate,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { persistor, store } from "./app/store";
+import { useDispatch, useSelector } from "react-redux";
 import MainLayout from "./pages/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import NoticeForm from "./pages/NoticeForm";
@@ -21,7 +15,6 @@ import Profile from "./pages/Profile";
 import { useEffect } from "react";
 import { connectSocket, socket } from "./lib/socket";
 import { fetchAllNotices } from "./app/slices/notice";
-import Nav from "./pages/Nav";
 
 function App() {
   const router = createBrowserRouter(

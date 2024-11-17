@@ -48,7 +48,7 @@ function NoticeList() {
   const [search, setSearch] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [category, setCategory] = useState("");
+  const [setCategory] = useState("");
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -61,7 +61,7 @@ function NoticeList() {
   };
 
   const handleFilter = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     // console.log(from, to, category);
     // setItems(items.filter((item) => item.category === category));
   };

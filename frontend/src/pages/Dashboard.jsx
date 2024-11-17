@@ -17,14 +17,14 @@ function Dashboard() {
   const { selectedNotice } = useSelector((state) => state.notice);
   const { isLoggedIn } = useSelector((state) => state.auth);
 
-  if (!isLoggedIn) {
-    return <Navigate to="/login" />;
-  }
-
   useEffect(() => {
     document.title = "Dashboard";
     dispatch(fetchAllNotices());
   }, [dispatch]);
+
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
 
   return (
     <div className="h-full w-full">

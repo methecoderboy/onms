@@ -9,12 +9,12 @@ import { Navigate, useNavigate } from "react-router-dom";
 function TeacherDashboard() {
   const { user } = useSelector((state) => state.auth);
   const { isLoggedIn } = useSelector((state) => state.auth);
-  if (!isLoggedIn) {
-    return <Navigate to="/login" />;
-  }
 
   const navigate = useNavigate();
 
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div className="h-full w-ful bg-slate-300">
       <header className="py-4 px-4 flex items-center justify-between ">

@@ -18,13 +18,7 @@ import { cn } from "@/lib/utils";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Fullscreen,
-  Search,
-  SlidersHorizontal,
-  SquarePen,
-  Trash2,
-} from "lucide-react";
+import { Search, SlidersHorizontal, SquarePen, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
@@ -37,7 +31,7 @@ import {
 } from "../app/slices/notice";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import DisplayNotice from "./DisplayNotice";
+// import DisplayNotice from "./DisplayNotice";
 
 function SentNoticeList() {
   const { sentNotices } = useSelector((state) => state.notice);
