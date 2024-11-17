@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Axios } from "../../lib/Axios";
+import { Axios } from "@/lib/axios";
 
 const initialState = {
   notices: [],
@@ -139,7 +139,7 @@ export const deleteNotice = createAsyncThunk(
 
 export const changePassword = createAsyncThunk(
   "/auth/changePassword",
-  async (formData, { dispatch }) => {
+  async (formData) => {
     try {
       const { data } = await Axios.post("/auth/change-password", formData, {
         withCredentials: true,

@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
 import { Provider, useDispatch, useSelector } from "react-redux";
@@ -17,6 +21,7 @@ import Profile from "./pages/Profile";
 import { useEffect } from "react";
 import { connectSocket, socket } from "./lib/socket";
 import { fetchAllNotices } from "./app/slices/notice";
+import Nav from "./pages/Nav";
 
 function App() {
   const router = createBrowserRouter(
@@ -74,13 +79,13 @@ function App() {
     }
   );
 
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
     document.title = "ONMS";
     if (!socket) {
-      connectSocket(user._id);
+      connectSocket(user?._id);
     }
     socket?.on("connection", () => {
       console.log("I am connected");
@@ -91,8 +96,8 @@ function App() {
     });
 
     return () => {
-      socket.off("connection");
-      socket.off("new_notice");
+      socket?.off("connection");
+      socket?.off("new_notice");
     };
   }, [user, dispatch]);
 

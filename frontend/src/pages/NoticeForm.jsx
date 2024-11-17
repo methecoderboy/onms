@@ -13,7 +13,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createNotice } from "../app/slices/notice";
 import { MoveLeft } from "lucide-react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const recps = [
   "students",
@@ -55,6 +55,7 @@ function NoticeForm() {
   const [content, setContent] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { role } = useSelector((state) => state.auth);
 
@@ -73,6 +74,16 @@ function NoticeForm() {
     };
 
     dispatch(createNotice(notice));
+    window.alert("Notice Created Successfully");
+    setTitle("");
+    setSubject("");
+    setContent("");
+    setCategory("");
+    setRecipient("");
+    setStudent("");
+    setDepartment("");
+    setRollNumber("");
+    setEmail("");
   };
 
   if (role === "student") {

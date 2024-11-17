@@ -45,19 +45,6 @@ router.post("/create", isAuthenticated, async (req, res) => {
   });
   await notice.save();
 
-  // let user;
-  // user = await Admin.findById(req.user._id);
-  // console.log(user);
-  // if (!user) {
-  //   user = await Teacher.findById(req.user._id);
-  //   console.log(user);
-  //   if (!user) {
-  //     return res
-  //       .status(401)
-  //       .json({ success: false, message: "Unauthorized Access" });
-  //   }
-  // }
-
   if (student && recipient == "students") {
     let students;
     if (student === "all students") {
