@@ -151,6 +151,9 @@ export const changePassword = createAsyncThunk(
       const { data } = await Axios.post("/auth/change-password", formData, {
         withCredentials: true,
       });
+      if (data.success) {
+        toast.success("Password changed successfully!");
+      }
       console.log(data);
     } catch (error) {
       console.error(error);

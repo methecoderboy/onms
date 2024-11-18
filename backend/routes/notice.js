@@ -62,7 +62,6 @@ router.post("/create", isAuthenticated, async (req, res) => {
       return res.json({ success: true, message: "Notice created" });
     }
     if (years.includes(student)) {
-      console.log(department);
       const students = await Student.find(
         {
           $and: [
@@ -97,9 +96,8 @@ router.post("/create", isAuthenticated, async (req, res) => {
   }
 
   if (recipient === "individual student") {
-    console.log(rollnumber);
     const std = await Student.findOne({ rollnumber }, "_id notices");
-    console.log(std);
+
     std?.notices.push(notice._id);
     await std?.save();
 
@@ -108,7 +106,6 @@ router.post("/create", isAuthenticated, async (req, res) => {
   }
 
   if (recipient === "individual teacher") {
-    console.log(email);
     const teacher = await Teacher.findOne({ email }, "_id notices");
     teacher.notices.push(notice._id);
     await teacher.save();
@@ -143,13 +140,12 @@ router.post("/edit", isAuthenticated, async (req, res) => {
 });
 
 router.get("/all", isAuthenticated, async (req, res) => {
-  console.log(req.user.notices);
   const notices = await Notice.find({ _id: { $in: req.user.notices } })
     .populate("creator", "name")
     .sort({
       updatedAt: -1,
     });
-  console.log(notices);
+
   res.json({
     success: true,
     message: "All notices",
