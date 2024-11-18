@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Login as LoginUser } from "../app/slices/auth";
 import { Navigate } from "react-router-dom";
-// import { Link } from "react-router-dom";
+import LoginImg from "../assets/login.jpg";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -40,14 +40,16 @@ function Login() {
 
   return (
     <div className="h-full w-full flex">
-      <div className="h-full w-[40%] bg-slate-300"></div>
+      <div className="h-full w-[50%] bg-white flex items-center justify-center overflow-hidden ">
+        <img src={LoginImg} alt="img" />
+      </div>
       <form
         className="h-full flex-grow bg-card flex justify-center "
         onSubmit={handleSubmit}
       >
         <Card className=" mx-auto w-[480px] shadow-none rounded-none border-none mt-20">
           <CardHeader>
-            <CardTitle className="text-2xl">Login</CardTitle>
+            <CardTitle className="text-2xl">ONMS | Login</CardTitle>
             <CardDescription>
               Enter your username below to login to your account
             </CardDescription>
