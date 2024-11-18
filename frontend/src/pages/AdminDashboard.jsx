@@ -4,7 +4,7 @@ import img8 from "../assets/img8.png";
 import img9 from "../assets/img9.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Logout } from "../app/slices/auth";
 
 function AdminDashboard() {

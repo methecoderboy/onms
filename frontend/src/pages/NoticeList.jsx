@@ -7,13 +7,7 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { cn } from "@/lib/utils";
 
 import { Input } from "@/components/ui/input";
@@ -25,19 +19,8 @@ import { Badge } from "@/components/ui/badge";
 import { useDispatch, useSelector } from "react-redux";
 import { formatDistanceToNow } from "date-fns";
 import { selectNotice } from "../app/slices/notice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-
-const Categories = [
-  "general",
-  "academic",
-  "admission",
-  "placement",
-  "meeting",
-  "event",
-  "holiday",
-  "urgent",
-];
 
 function NoticeList() {
   const { notices } = useSelector((state) => state.notice);
@@ -48,7 +31,7 @@ function NoticeList() {
   const [search, setSearch] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
-  const [setCategory] = useState("");
+  const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -62,9 +45,34 @@ function NoticeList() {
 
   const handleFilter = (e) => {
     e.preventDefault();
-    // console.log(from, to, category);
-    // setItems(items.filter((item) => item.category === category));
+    let res;
+    setOpen(false);
+    res = notices.filter((notice) => {
+      if (from && to) {
+        return notice.createdAt >= from && notice.createdAt <= to;
+      }
+      if (from && !to) {
+        return notice.createdAt >= from;
+      }
+      if (!from && to) {
+        return notice.createdAt <= to;
+      }
+    });
+
+    setItems(res);
   };
+
+  const handleReset = () => {
+    setOpen(false);
+    setFrom("");
+    setTo("");
+    setItems(notices);
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    setItems(notices);
+  }, [notices]);
 
   if (!isLoggedIn) {
     return <Navigate to="/auth/login" />;
@@ -84,7 +92,7 @@ function NoticeList() {
             />
           </div>
         </header>
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger>
             <SlidersHorizontal size={20} className="cursor-pointer" />
           </DialogTrigger>
@@ -120,32 +128,18 @@ function NoticeList() {
                   onChange={(e) => setTo(e.target.value)}
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label>Categories</Label>
-                <Select onValueChange={setCategory}>
-                  <SelectTrigger className="w-[280px] bg-white">
-                    <SelectValue placeholder="Category" />
-                  </SelectTrigger>
-
-                  <SelectContent>
-                    {Categories.map((category) => (
-                      <SelectItem key={category} value={category}>
-                        {category.toUpperCase()}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={handleReset}>
+                  Reset
+                </Button>
+                <Button type="submit">Apply</Button>
+              </DialogFooter>
             </form>
-            <DialogFooter>
-              <Button variant="outline">Reset</Button>
-              <Button type="submit">Apply</Button>
-            </DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
       <main className="h-[calc(100%-48px)] flex-grow px-4 pb-4 bg-white">
-        <ScrollArea className="h-full w-full bg-slate-50">
+        <ScrollArea className="h-full w-full">
           <div className="flex flex-col gap-2 p-4 pt-1 bg-white">
             {items.map((item) => (
               <div
@@ -181,6 +175,9 @@ function NoticeList() {
                 </div>
               </div>
             ))}
+            {items.length === 0 && (
+              <h1 className="mx-auto text-center">No notice found</h1>
+            )}
           </div>
         </ScrollArea>
       </main>

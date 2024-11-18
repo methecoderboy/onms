@@ -7,18 +7,11 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Search, SlidersHorizontal, SquarePen, Trash2 } from "lucide-react";
+import { Fullscreen, SlidersHorizontal, SquarePen, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
@@ -31,18 +24,17 @@ import {
 } from "../app/slices/notice";
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-// import DisplayNotice from "./DisplayNotice";
 
 function SentNoticeList() {
   const { sentNotices } = useSelector((state) => state.notice);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const [items, setItems] = useState(sentNotices);
-
-  let items;
-  items = sentNotices;
+  const [items, setItems] = useState(sentNotices);
   const [search, setSearch] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [open, setOpen] = useState(false);
 
   const handleChange = (e) => {
     setSearch(e.target.value);
@@ -51,8 +43,40 @@ function SentNoticeList() {
         .toLowerCase()
         .includes(e.target.value.toLowerCase());
     });
-    items = res;
+    setItems(res);
   };
+
+  const handleFilter = (e) => {
+    e.preventDefault();
+    let res;
+    setOpen(false);
+    res = sentNotices.filter((notice) => {
+      if (from && to) {
+        return notice.createdAt >= from && notice.createdAt <= to;
+      }
+      if (from && !to) {
+        return notice.createdAt >= from;
+      }
+      if (!from && to) {
+        return notice.createdAt <= to;
+      }
+    });
+
+    setItems(res);
+  };
+
+  const handleReset = () => {
+    setOpen(false);
+    setFrom("");
+    setTo("");
+    setItems(sentNotices);
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    setItems(sentNotices);
+    console.log("reloaded");
+  }, [sentNotices]);
 
   useEffect(() => {
     dispatch(fetchSentNotices());
@@ -64,28 +88,28 @@ function SentNoticeList() {
 
   return (
     <div className="h-full w-[99%] overflow-auto  flex flex-col items-center overflow-x-hidden mx-auto">
-      <div className="h-14 w-1/2  px-4  flex items-center justify-center mx-auto gap-2">
-        <header className="p-2 h-14 w-full flex items-center justify-center">
+      <div className="h-14 w-1/2  px-4  flex items-center justify-center mx-auto ">
+        <header className="p-2 h-14 lg:w-[90%] w-full flex items-center justify-center">
           <div className="relative h-full w-full flex items-center justify-center">
-            <Search className="absolute left-2 top-3.25 h-4 w-4 text-muted-foreground " />
+            {/* <Search className="absolute left-4 top-3.25 h-4 w-4 text-muted-foreground " /> */}
             <Input
-              placeholder="Search"
+              placeholder="Search for notice"
               className="h-full lg:w-[600px] pl-8 border bg-white rounded-lg"
               value={search}
               onChange={handleChange}
             />
           </div>
         </header>
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger>
-            <SlidersHorizontal size={20} className="cursor-pointer" />
+            <SlidersHorizontal size={20} className="cursor-pointer lg:mr-4" />
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Edit profile</DialogTitle>
               <DialogDescription>Apply fiters to your search</DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
+            <form className="grid gap-4 py-4" onSubmit={handleFilter}>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="from" className="">
                   From
@@ -95,6 +119,8 @@ function SentNoticeList() {
                   name="from"
                   id="from"
                   className="w-[280px] p-1 border rounded-md"
+                  value={from}
+                  onChange={(e) => setFrom(e.target.value)}
                 />
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
@@ -106,26 +132,17 @@ function SentNoticeList() {
                   name="to"
                   id="to"
                   className="w-[280px] p-1 border rounded-md"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label>Categories</Label>
-                <Select>
-                  <SelectTrigger className="w-[280px]">
-                    <SelectValue placeholder="Theme" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="light">Light</SelectItem>
-                    <SelectItem value="dark">Dark</SelectItem>
-                    <SelectItem value="system">System</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline">Reset</Button>
-              <Button type="submit">Apply</Button>
-            </DialogFooter>
+              <DialogFooter>
+                <Button variant="outline" onClick={handleReset}>
+                  Reset
+                </Button>
+                <Button type="submit">Apply</Button>
+              </DialogFooter>
+            </form>
           </DialogContent>
         </Dialog>
       </div>
@@ -134,7 +151,7 @@ function SentNoticeList() {
           <div className="flex flex-col gap-2 p-4 pt-1 bg-white overflow-auto">
             {items.map((item) => (
               <div
-                key={item.id}
+                key={item.title}
                 className={cn(
                   "flex flex-col  items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent cursor-pointer "
                 )}
@@ -159,6 +176,37 @@ function SentNoticeList() {
                   <div className="flex items-center gap-2 w-full">
                     <Badge>{item.category}</Badge>
                   </div>
+                  <Dialog>
+                    <DialogTrigger>
+                      <Button
+                        variant="outline"
+                        className="flex items-center h-6 w-20 gap-1 self-end"
+                      >
+                        <Fullscreen />
+                        <span>View</span>
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="h-[600px] max-h-[800px] max-w-[800px] ">
+                      <div className="h-full w-full bg-white flex flex-col ">
+                        <header className=" w-full flex items-center justify-center pt-8 relative">
+                          <h1 className="text-2xl ">Notice</h1>
+                        </header>
+                        <div className="w-full flex items-center gap-2 px-12 py-6 mt-10">
+                          <span>Subject:</span> <span>{item.subject}</span>
+                        </div>
+                        <p className="px-12">{item.content}</p>
+                        <div className="px-12 pt-8 ">
+                          <div className="inline-flex flex-col gap-2 items-center justify-center">
+                            <span className="">Regards</span>
+                            <span>
+                              <span>{item.creator?.name}</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+
                   <Button
                     variant="outline"
                     className="flex items-center h-6 w-20 gap-1 self-end"
@@ -184,7 +232,7 @@ function SentNoticeList() {
               </div>
             ))}
             {items.length === 0 && (
-              <h1 className="mx-auto text-center">No notices found</h1>
+              <h1 className="mx-auto text-center">No notice found</h1>
             )}
           </div>
         </ScrollArea>
