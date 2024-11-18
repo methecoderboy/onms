@@ -75,10 +75,8 @@ function SentNoticeList() {
 
   useEffect(() => {
     setItems(sentNotices);
-    console.log("reloaded");
   }, [sentNotices]);
-
-  useEffect(() => {
+  ~useEffect(() => {
     dispatch(fetchSentNotices());
   }, [dispatch]);
 
@@ -151,7 +149,7 @@ function SentNoticeList() {
           <div className="flex flex-col gap-2 p-4 pt-1 bg-white overflow-auto">
             {items.map((item) => (
               <div
-                key={item.title}
+                key={item._id}
                 className={cn(
                   "flex flex-col  items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent cursor-pointer "
                 )}

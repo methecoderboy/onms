@@ -5,6 +5,12 @@ const { isAuthenticated } = require("../middlewares/isAuthenticated");
 const student = require("../models/student");
 const teacher = require("../models/teacher");
 const Admin = require("../models/admin");
+const {
+  login,
+  logout,
+  profile,
+  changePassowrd,
+} = require("../controllers/auth");
 
 const router = Router();
 
@@ -15,69 +21,77 @@ const cookieOptions = {
   secure: true,
 };
 
-router.post("/login", async (req, res) => {
-  const { email, rollnumber, password, role } = req.body;
-  let user;
-  if (role === "student") {
-    user = await student.findOne({ rollnumber });
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User not found" });
-    }
-  } else if (role === "teacher") {
-    user = await teacher.findOne({ email });
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User not found" });
-    }
-  } else {
-    user = await Admin.findOne({ email });
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User not found" });
-    }
-  }
+// router.post("/login", async (req, res) => {
+//   const { email, rollnumber, password, role } = req.body;
+//   let user;
+//   if (role === "student") {
+//     user = await student.findOne({ rollnumber });
+//     if (!user) {
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "User not found" });
+//     }
+//   } else if (role === "teacher") {
+//     user = await teacher.findOne({ email });
+//     if (!user) {
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "User not found" });
+//     }
+//   } else {
+//     user = await Admin.findOne({ email });
+//     if (!user) {
+//       return res
+//         .status(400)
+//         .json({ success: false, message: "User not found" });
+//     }
+//   }
 
-  if (!correctPassword(password, user.password)) {
-    return res.json({ success: false, message: "Invalid password" });
-  }
+//   if (!correctPassword(password, user.password)) {
+//     return res.json({ success: false, message: "Invalid password" });
+//   }
 
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-  res.cookie("onms-token", token, cookieOptions);
-  res.json({
-    success: true,
-    message: "User logged in",
-    user: user,
-    role: user.role,
-  });
-});
+//   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+//   res.cookie("onms-token", token, cookieOptions);
+//   res.json({
+//     success: true,
+//     message: "User logged in",
+//     user: user,
+//     role: user.role,
+//   });
+// });
 
-router.get("/logout", async (req, res) => {
-  return res
-    .status(200)
-    .cookie("viby-token", "", {
-      maxAge: 0,
-      sameSite: "none",
-      httpOnly: true,
-      secure: true,
-    })
-    .json({ success: true, message: "Logged out" });
-});
+// router.get("/logout", async (req, res) => {
+//   return res
+//     .status(200)
+//     .cookie("onms-token", "", {
+//       maxAge: 0,
+//       sameSite: "none",
+//       httpOnly: true,
+//       secure: true,
+//     })
+//     .json({ success: true, message: "Logged out" });
+// });
+
+// router.get("/profile", async (req, res) => {
+//   res.json({ success: true, message: "Profile", user: req.user });
+// });
+
+// router.post("/change-password", async (req, res) => {
+//   const { newPassword } = req.body;
+//   req.user.password = newPassword;
+//   await req.user.save();
+//   res.json({ success: true, message: "Password changed" });
+// });
+
+router.post("/login", login);
+
+router.get("/logout", logout);
 
 router.use(isAuthenticated);
 
-router.get("/profile", async (req, res) => {
-  res.json({ success: true, message: "Profile", user: req.user });
-});
+router.get("/profile", profile);
 
-router.post("/change-password", async (req, res) => {
-  const { newPassword } = req.body;
-  req.user.password = newPassword;
-  await req.user.save();
-  res.json({ success: true, message: "Password changed" });
-});
+router.post("/change-password", changePassowrd);
 
 module.exports = router;
