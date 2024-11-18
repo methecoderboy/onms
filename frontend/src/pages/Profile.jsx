@@ -12,21 +12,25 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { changePassword } from "../app/slices/notice";
 import { Navigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Profile() {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Password do not match");
+      toast.error("Passwords do not match");
       return;
     }
+    setOpen(false);
     dispatch(changePassword({ newPassword: password }));
-    alert("Password Changed Successfully");
+    setPassword("");
+    setConfirmPassword("");
   };
 
   if (!isLoggedIn) {
@@ -72,7 +76,7 @@ function Profile() {
             </div>
           </div>
           <div className="w-full flex items-center px-24 gap-32 mt-8">
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen}>
               <DialogTrigger>
                 <Button
                   variant="secondary"
@@ -105,7 +109,7 @@ function Profile() {
                     <Label htmlFor="email">New Password</Label>
                     <Input
                       id="confirmPassword"
-                      type="psasword"
+                      type="password"
                       placeholder="Confirm Password"
                       required
                       className="w-[320px] "
