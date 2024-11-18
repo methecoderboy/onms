@@ -27,6 +27,7 @@ const {
   createTeachers,
 } = require("./lib/helper");
 const { InitSocket } = require("./lib/socket");
+const { errorMiddleware } = require("./middlewares/error");
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,6 +50,9 @@ mongoose.connect(process.env.MONGO_URI).then((res) => {
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
+app.use(errorMiddleware);
+
 const server = http.createServer(app);
 
 server.listen(3000, () => {
