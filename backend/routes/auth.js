@@ -1,5 +1,4 @@
 const { Router } = require("express");
-const User = require("../models/user");
 const { correctPassword } = require("../lib/helper");
 const jwt = require("jsonwebtoken");
 const { isAuthenticated } = require("../middlewares/isAuthenticated");

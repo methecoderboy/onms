@@ -58,7 +58,7 @@ function Profile() {
             </div>
             <div className="w-full flex items-center px-24 gap-32 mt-6">
               <span className="w-1/2 flex font-medium">Semester</span>
-              <span className="w-1/2 flex font-medium">{user?.sememster}</span>
+              <span className="w-1/2 flex font-medium">{user?.semester}</span>
             </div>
             <div className="w-full flex items-center px-24 gap-32 mt-6">
               <span className="w-1/2 flex font-medium">Roll Number</span>

@@ -1,7 +1,6 @@
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 let socket;
-const url = "https://onms.onrender.com";
 
 const connectSocket = (user_id) => {
   if (user_id === undefined) {

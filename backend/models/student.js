@@ -26,7 +26,7 @@ const schema = new Schema(
       type: String,
       enum: ["CSE", "ECE", "EEE", "MECH", "CIVIL", "IT"],
     },
-    sememster: {
+    semester: {
       type: Number,
       required: true,
     },

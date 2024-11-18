@@ -12,6 +12,7 @@ import SentNoticeList from "./pages/SentNoticeList";
 import EditNoticeForm from "./pages/EditNoticeForm";
 import AdminView from "./pages/AdminView";
 import Profile from "./pages/Profile";
+import { Toaster } from "react-hot-toast";
 
 import RootLayout from "./pages/RootLayout";
 
@@ -84,6 +85,7 @@ function App() {
           v7_startTransition: true,
         }}
       />
+      <Toaster />
     </div>
   );
 }

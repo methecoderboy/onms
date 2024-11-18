@@ -9,69 +9,110 @@ const correctPassword = (password, hash) => {
   return bcrypt.compareSync(password, hash);
 };
 
-const createStudents = async (num) => {
-  for (let i = 1; i <= num; i++) {
-    const dob = faker.date.birthdate({ min: 19, max: 25, mode: "age" });
-    const student = new Student({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      dob,
-      rollnumber: faker.number.int({ min: 100000, max: 109999 }),
-      department: faker.helpers.arrayElement([
-        "CSE",
-        "ECE",
-        "EEE",
-        "MECH",
-        "CIVIL",
-        "IT",
-      ]),
-      sememster: faker.number.int({ min: 1, max: 8 }),
-      section: faker.helpers.arrayElement(["A", "B", "C", "D"]),
-      password: format(dob, "dd/MM/yyyy").split("/").join(""),
-      role: "student",
+const students = [
+  {
+    name: "Aftab Alam",
+    email: "aftabalam@gmail.com",
+    dob: "2003-03-13",
+    rollnumber: 13000122089,
+    department: "CSE",
+    semester: 5,
+    section: "B",
+    password: "13032003",
+    role: "student",
+  },
+  {
+    name: "Arman Munshi",
+    email: "armanmunshi@gmail.com",
+    dob: "2003-05-11",
+    rollnumber: 13000122066,
+    department: "CSE",
+    semester: 5,
+    section: "B",
+    password: "11052003",
+    role: "student",
+  },
+  {
+    name: "Amarjeet Anand",
+    email: "amarjeetanand123@gmail.com",
+    dob: "2003-06-15",
+    rollnumber: 13000122063,
+    department: "CSE",
+    semester: 5,
+    section: "B",
+    password: "15062003",
+    role: "student",
+  },
+];
+
+const createStudents = async () => {
+  students.forEach(async (student) => {
+    const newStudent = new Student({
+      name: student.name,
+      email: student.email,
+      dob: new Date(student.dob),
+      rollnumber: student.rollnumber,
+      department: student.department,
+      semester: student.semester,
+      section: student.section,
+      password: student.password,
+      role: student.role,
     });
-    await student.save();
-  }
+    await newStudent.save();
+  });
+  console.log(`Students created`);
 };
 
-const createTeachers = async (num) => {
-  for (let i = 1; i <= num; i++) {
-    const teacher = new Teacher({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      subject: faker.helpers.arrayElement([
-        "Maths",
-        "Physics",
-        "Chemistry",
-        "Biology",
-        "Computer Science",
-      ]),
-      password: "teacher",
-      role: "teacher",
-      position: faker.helpers.arrayElement([
-        "HOD",
-        "Lecturer",
-        "Assistant",
-        "Professor",
-        "Principal",
-      ]),
+const teachers = [
+  {
+    name: "Rohit Sharma",
+    email: "rohitsharma45@gmail.com",
+    subject: "Maths",
+    password: "teacher",
+    role: "teacher",
+    position: "HOD",
+  },
+  {
+    name: "Manish Singh",
+    email: "manishsingh09@gmail.com",
+    subject: "Physics",
+    password: "teacher",
+    role: "teacher",
+    position: "Lecturer",
+  },
+  {
+    name: "Amit Kumar",
+    email: "amitkumar12@gmail.com",
+    subject: "Chemistry",
+    password: "teacher",
+    role: "teacher",
+    position: "Professor",
+  },
+];
+
+const createTeachers = async () => {
+  teachers.forEach(async (teacher) => {
+    const newTeacher = new Teacher({
+      name: teacher.name,
+      email: teacher.email,
+      subject: teacher.subject,
+      password: teacher.password,
+      role: teacher.role,
+      position: teacher.position,
     });
-    await teacher.save();
-    console.log(`Teacher ${num} created`);
-  }
+    await newTeacher.save();
+  });
 };
 
 const createAdmins = async (num) => {
-  for (let i = 1; i <= num; i++) {
-    const admin = new Admin({
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: "admin",
-      role: "admin",
-    });
-    await admin.save();
-    console.log(`Admin ${num} created`);
-  }
+  const admin = new Admin({
+    name: "Aftab Alam",
+    email: "aftabalamdlm@gmail.com",
+    password: "admin",
+    role: "admin",
+  });
+  await admin.save();
+  console.log(`Admin ${num} created`);
 };
 
 module.exports = {

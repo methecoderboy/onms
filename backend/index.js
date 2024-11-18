@@ -13,17 +13,13 @@ const noticeRoutes = require("./routes/notice");
 
 const app = express();
 
-
-
 app.use(
   cors({
-    origin: "https://onms-client-one.vercel.app",
+    origin: ["https://onms-client.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
-
-
 
 const {
   createStudents,
@@ -45,6 +41,10 @@ app.use("/notice", noticeRoutes);
 mongoose.connect(process.env.MONGO_URI).then((res) => {
   console.log("Connected to MongoDB");
 });
+
+// createStudents();
+// createAdmins();
+// createTeachers();
 
 app.get("/", (req, res) => {
   res.send("Hello World");

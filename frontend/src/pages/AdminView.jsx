@@ -23,7 +23,6 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { useDispatch, useSelector } from "react-redux";
-import { formatDistanceToNow } from "date-fns";
 import { fetchAllNotices, selectNotice } from "../app/slices/notice";
 import { useEffect } from "react";
 import DisplayNotice from "./DisplayNotice";
@@ -44,7 +43,7 @@ function AdminView() {
   }
 
   return (
-    <div className="h-full w-[99%] overflow-auto  flex flex-col items-center overflow-x-hidden mx-auto">
+    <div className="h-full w-[99%] overflow-auto  flex flex-col items-center overflow-x-hidden mx-auto bg-blue-100">
       <form className="h-14 w-1/2  px-4  flex items-center justify-center mx-auto gap-2">
         <header className="p-2 h-14 w-full flex items-center justify-center">
           <div className="relative h-full w-full flex items-center justify-center">
@@ -108,16 +107,16 @@ function AdminView() {
           </DialogContent>
         </Dialog>
       </form>
-      <main className="h-[calc(100%-48px)] lg:w-[900px] md:w-[720px]  flex-grow px-4 pb-4 bg-white overflow-auto">
+      <main className="h-[calc(100%-48px)] lg:w-[900px] md:w-[720px]  flex-grow px-4 pb-4 bg-blue-100 overflow-auto">
         <ScrollArea className="h-full w-full">
-          <div className="flex flex-col gap-2 p-4 pt-1 bg-white overflow-auto">
+          <div className="flex flex-col gap-2 p-4 pt-1 overflow-auto">
             {items.map((item) => (
               <Dialog key={item?.subject}>
                 <DialogTrigger>
                   <div
                     key={item?.id}
                     className={cn(
-                      "flex flex-col  items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent cursor-pointer "
+                      "flex flex-col bg-white  items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent cursor-pointer "
                     )}
                     onClick={() => {
                       dispatch(selectNotice(item?._id));
@@ -129,9 +128,7 @@ function AdminView() {
                           <div className="font-semibold">{item?.title}</div>
                         </div>
                         <div className={cn("ml-auto text-xs")}>
-                          {/* {formatDistanceToNow(item?.updatedAt, {
-                            addSuffix: true,
-                          })} */}
+                          {new Date(item?.updatedAt).toLocaleDateString()}
                         </div>
                       </div>
                       <div className="text-xs font-medium">{item?.subject}</div>
@@ -139,7 +136,7 @@ function AdminView() {
                     <div className="line-clamp-2 text-xs text-muted-foreground">
                       {item?.content.substring(0, 300)}
                     </div>
-                    <div className="w-full flex items-center  pt-2 gap-2">
+                    <div className="w-full flex items-center  pt-1 gap-2">
                       <div className="flex items-center gap-2 w-full">
                         <Badge>{item?.category}</Badge>
                       </div>

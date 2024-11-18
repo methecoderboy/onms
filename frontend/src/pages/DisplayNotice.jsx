@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNotice, selectNotice } from "../app/slices/notice";
@@ -35,7 +36,7 @@ function DisplayNotice({ showBackButton }) {
         <div className="inline-flex flex-col gap-2 items-center justify-center">
           <span className="">Regards</span>
           <span>
-            <span>{viewNotice?.creator.name}</span>
+            <span>{viewNotice?.creator?.name}</span>
           </span>
         </div>
       </div>

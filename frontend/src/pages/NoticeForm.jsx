@@ -94,9 +94,9 @@ function NoticeForm() {
   }
 
   return (
-    <div className="h-full w-full bg-blue-100 flex items-center justify-center ">
+    <div className="h-full w-full  flex items-center justify-center ">
       <form
-        className="h-full w-full flex flex-col bg-blue-300 rounded-sm shadow-md"
+        className="h-full w-full flex flex-col bg-slate-300 rounded-sm shadow-md"
         onSubmit={handleSubmit}
       >
         <header className="h-12 w-full flex items-center px-10">
@@ -106,7 +106,7 @@ function NoticeForm() {
               window.history.back();
             }}
           >
-            <MoveLeft size={28} />{" "}
+            <MoveLeft size={28} />
             <span className="text-lg font-medium">Go Back</span>
           </div>
         </header>
@@ -119,6 +119,7 @@ function NoticeForm() {
             <Input
               type="text"
               id="title"
+              required
               className="bg-white w-[600px]"
               placeholder="Enter title "
               value={title}
@@ -130,6 +131,7 @@ function NoticeForm() {
             <Input
               type="text"
               id="subject"
+              required
               className="bg-white w-[600px]"
               placeholder="Enter Subject"
               value={subject}
@@ -137,8 +139,8 @@ function NoticeForm() {
             />
           </div>
 
-          <div className="input-item py-2 flex justify-between gap-2 w-[600px] ">
-            <Select onValueChange={setCategory}>
+          <div className="input-item py-2 flex justify-between gap-2 mt-4 w-[600px] ">
+            <Select onValueChange={setCategory} required>
               <SelectTrigger className="w-[280px] bg-white">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
@@ -151,7 +153,7 @@ function NoticeForm() {
                 ))}
               </SelectContent>
             </Select>
-            <Select onValueChange={setRecipient}>
+            <Select onValueChange={setRecipient} required>
               <SelectTrigger className="w-[280px] bg-white">
                 <SelectValue placeholder="Recipient" />
               </SelectTrigger>
@@ -166,7 +168,7 @@ function NoticeForm() {
           </div>
           {recipient === "students" && (
             <div className="input-item py-2 flex justify-between gap-2 w-[600px] ">
-              <Select onValueChange={setStudent}>
+              <Select onValueChange={setStudent} required>
                 <SelectTrigger className="w-[280px] bg-white">
                   <SelectValue placeholder="Select Students" />
                 </SelectTrigger>
@@ -214,6 +216,7 @@ function NoticeForm() {
                 className="bg-white w-[600px]"
                 placeholder="Enter Email"
                 value={email}
+                required
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
@@ -222,6 +225,7 @@ function NoticeForm() {
             <Label htmlFor="content">Content</Label>
             <Textarea
               placeholder="Type your message here."
+              required
               id="content"
               className="bg-white w-[600px] h-[140px]"
               value={content}

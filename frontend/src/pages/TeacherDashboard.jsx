@@ -5,7 +5,7 @@ import img9 from "../assets/img9.png";
 import img10 from "../assets/img10.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui/button";
 import { Logout } from "../app/slices/auth";
 import { useEffect } from "react";
 import { fetchSentNotices } from "../app/slices/notice";
@@ -29,7 +29,7 @@ function TeacherDashboard() {
   }
 
   return (
-    <div className="h-full w-ful bg-slate-300">
+    <div className="h-full w-ful bg-blue-200">
       <header className="py-4 px-4 flex items-center justify-between ">
         <h1 className="font-Poppins text-3xl">TMSL | Dashboard</h1>
         <div className="flex items-center gap-3 pr-10">

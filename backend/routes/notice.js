@@ -7,8 +7,8 @@ const Teacher = require("../models/teacher");
 const Admin = require("../models/admin");
 const router = Router();
 
-const { getIO, getSocketId } = require("../lib/socket");
-const { get } = require("mongoose");
+// const { getIO, getSocketId } = require("../lib/socket");
+// const { get } = require("mongoose");
 
 const year = {
   "first year": 1,
@@ -56,10 +56,10 @@ router.post("/create", isAuthenticated, async (req, res) => {
         student.notices.push(notice._id);
         await student.save();
       });
-      getIO()
-        .to(students.map((student) => getSocketId(student._id)))
-        .emit("new-notice");
-      return res.json({ success: true, message: "Notice created", students });
+      // getIO()
+      //   .to(students.map((student) => getSocketId(student._id)))
+      //   .emit("new-notice");
+      return res.json({ success: true, message: "Notice created" });
     }
     if (years.includes(student)) {
       console.log(department);
@@ -85,9 +85,9 @@ router.post("/create", isAuthenticated, async (req, res) => {
         student.notices.push(notice._id);
         await student.save();
       });
-      getIO()
-        .to(students.map((student) => getSocketId(student._id)))
-        .emit("new-notice");
+      // getIO()
+      //   .to(students.map((student) => getSocketId(student._id)))
+      //   .emit("new-notice");
       return res.json({
         success: true,
         message: "Notice yearwise created",
@@ -103,7 +103,7 @@ router.post("/create", isAuthenticated, async (req, res) => {
     std?.notices.push(notice._id);
     await std?.save();
 
-    getIO().to(getSocketId(std._id)).emit("new-notice");
+    // getIO().to(getSocketId(std._id)).emit("new-notice");
     return res.json({ success: true, message: "Notice created", student: std });
   }
 
@@ -112,19 +112,21 @@ router.post("/create", isAuthenticated, async (req, res) => {
     const teacher = await Teacher.findOne({ email }, "_id notices");
     teacher.notices.push(notice._id);
     await teacher.save();
-    getIO().to(getSocketId(teacher._id)).emit("new-notice");
+    // getIO().to(getSocketId(teacher._id)).emit("new-notice");
     return res.json({ success: true, message: "Notice created", teacher });
   }
 
   if (recipient === "teachers") {
     const teachers = await Teacher.find({}, "_id notices");
     teachers.forEach(async (teacher) => {
-      teacher.notices.push(notice._id);
-      await teacher.save();
+      if (teacher._id.toString() !== req.user._id.toString()) {
+        teacher.notices.push(notice._id);
+        await teacher.save();
+      }
     });
-    getIO()
-      .to(teachers.map((teacher) => getSocketId(teacher._id)))
-      .emit("new-notice");
+    // getIO()
+    //   .to(teachers.map((teacher) => getSocketId(teacher._id)))
+    //   .emit("new-notice");
     return res.json({ success: true, message: "Notice created", teachers });
   }
 });
@@ -181,8 +183,8 @@ router.post("/update", isAuthenticated, async (req, res) => {
 });
 
 router.post("/delete", isAuthenticated, async (req, res) => {
-  const { _id } = req.body;
-  await Notice.findByIdAndDelete(_id);
+  const { noticeId } = req.body;
+  await Notice.findByIdAndDelete(noticeId);
   res.json({ success: true, message: "Notice deleted" });
 });
 

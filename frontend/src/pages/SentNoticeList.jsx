@@ -38,7 +38,10 @@ function SentNoticeList() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [items, setItems] = useState(sentNotices);
+  // const [items, setItems] = useState(sentNotices);
+
+  let items;
+  items = sentNotices;
   const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
@@ -48,7 +51,7 @@ function SentNoticeList() {
         .toLowerCase()
         .includes(e.target.value.toLowerCase());
     });
-    setItems(res);
+    items = res;
   };
 
   useEffect(() => {
@@ -134,28 +137,14 @@ function SentNoticeList() {
                 key={item.id}
                 className={cn(
                   "flex flex-col  items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent cursor-pointer "
-                  // mail.selected === item.id && "bg-muted"
                 )}
-                // onMouseEnter={() => {
-                //   console.log("entered");
-                // }}
               >
                 <div className="flex w-full flex-col gap-1">
                   <div className="flex items-center">
                     <div className="flex items-center gap-2">
                       <div className="font-semibold">{item.title}</div>
-                      {/* {!item.read && (
-                    <span className="flex h-2 w-2 rounded-full bg-blue-600" />
-                  )} */}
                     </div>
-                    <div
-                      className={cn(
-                        "ml-auto text-xs"
-                        // mail.selected === item.id
-                        //   ? "text-foreground"
-                        //   : "text-muted-foreground"
-                      )}
-                    >
+                    <div className={cn("ml-auto text-xs")}>
                       {formatDistanceToNow(item.updatedAt, {
                         addSuffix: true,
                       })}
@@ -170,24 +159,6 @@ function SentNoticeList() {
                   <div className="flex items-center gap-2 w-full">
                     <Badge>{item.category}</Badge>
                   </div>
-                  {/* <Dialog>
-                    <DialogTrigger>
-                      <Button
-                        className="flex items-center h-6 w-20 gap-1 self-end"
-                        onClick={() => {
-                          selectNotice(item._id);
-                          console.log("view");
-                        }}
-                      >
-                        <Fullscreen />
-                        <span>View</span>
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="h-[500px] w-[600px]">
-                      <DisplayNotice />
-                    </DialogContent>
-                  </Dialog> */}
-
                   <Button
                     variant="outline"
                     className="flex items-center h-6 w-20 gap-1 self-end"
@@ -212,6 +183,9 @@ function SentNoticeList() {
                 </div>
               </div>
             ))}
+            {items.length === 0 && (
+              <h1 className="mx-auto text-center">No notices found</h1>
+            )}
           </div>
         </ScrollArea>
       </main>

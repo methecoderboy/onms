@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Axios } from "../../lib/axios";
+import toast from "react-hot-toast";
 
 const initialState = {
   user: null,
@@ -35,6 +36,7 @@ export const Login = createAsyncThunk(
         withCredentials: true,
       });
       if (data.success) {
+        toast.success("Login successful");
         dispatch(setUser(data.user));
       }
     } catch (error) {

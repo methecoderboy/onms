@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Axios } from "@/lib/axios";
+import toast from "react-hot-toast";
 
 const initialState = {
   notices: [],
@@ -42,6 +43,7 @@ export const createNotice = createAsyncThunk(
         withCredentials: true,
       });
       if (data.success) {
+        toast.success("Notice posted!");
         dispatch(slice.actions.addNotice(data.notice));
       }
     } catch (error) {
@@ -92,6 +94,7 @@ export const fetchSentNotices = createAsyncThunk(
       });
       if (data.success) {
         dispatch(slice.actions.setSentNotices(data.notices));
+        return data;
       }
     } catch (error) {
       console.error(error);
@@ -109,6 +112,7 @@ export const updateNotice = createAsyncThunk(
       if (data.success) {
         dispatch(fetchSentNotices());
         dispatch(slice.actions.selectNotice(null));
+        return data;
       }
     } catch (error) {
       console.error(error);
@@ -128,9 +132,12 @@ export const deleteNotice = createAsyncThunk(
         }
       );
       if (data.success) {
-        dispatch(fetchSentNotices());
-        dispatch(fetchAllNotices());
+        await dispatch(fetchSentNotices());
+        await dispatch(fetchAllNotices());
+        toast.success("Notice deleted!");
       }
+
+      return { success: data.success };
     } catch (error) {
       console.error(error);
     }
