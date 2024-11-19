@@ -47,6 +47,7 @@ export const createNotice = createAsyncThunk(
         dispatch(slice.actions.addNotice(data.notice));
       }
     } catch (error) {
+      toast.error("Failed to post notice!");
       console.error(error);
     }
   }
@@ -63,6 +64,7 @@ export const fetchAllNotices = createAsyncThunk(
         dispatch(slice.actions.setNotices(data.notices));
       }
     } catch (error) {
+      toast.error("Failed to fetch notices!");
       console.error(error);
     }
   }
@@ -80,6 +82,7 @@ export const fetchNotice = createAsyncThunk(
         dispatch(slice.actions.setViewNotice(data.notice));
       }
     } catch (error) {
+      toast.error("Failed to fetch notice!");
       console.error(error);
     }
   }
@@ -97,6 +100,7 @@ export const fetchSentNotices = createAsyncThunk(
         return data;
       }
     } catch (error) {
+      toast.error("Failed to fetch sent notices!");
       console.error(error);
     }
   }
@@ -115,6 +119,7 @@ export const updateNotice = createAsyncThunk(
         return data;
       }
     } catch (error) {
+      toast.error("Notice update failed!");
       console.error(error);
     }
   }
@@ -139,6 +144,7 @@ export const deleteNotice = createAsyncThunk(
 
       return { success: data.success };
     } catch (error) {
+      toast.error("Notice deletion failed!");
       console.error(error);
     }
   }
@@ -156,6 +162,7 @@ export const changePassword = createAsyncThunk(
       }
       console.log(data);
     } catch (error) {
+      toast.error("Password change failed!");
       console.error(error);
     }
   }
