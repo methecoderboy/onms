@@ -51,7 +51,10 @@ function Login() {
           <CardHeader>
             <CardTitle className="text-2xl">ONMS | Login</CardTitle>
             <CardDescription>
-              Enter your username below to login to your account
+              {/* Enter your username below to login to your account */}
+              {`Enter your ${
+                role === "student" ? "roll number" : "email"
+              } and password to login`}
             </CardDescription>
           </CardHeader>
           <CardContent>

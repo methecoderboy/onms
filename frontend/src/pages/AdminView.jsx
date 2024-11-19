@@ -81,7 +81,7 @@ function AdminView() {
   }
 
   return (
-    <div className="h-full w-[99%] overflow-auto  flex flex-col items-center overflow-x-hidden mx-auto bg-blue-100">
+    <div className="h-full w-[99%] overflow-auto  flex flex-col items-center overflow-x-hidden mx-auto bg-white">
       <div className="h-14 w-1/2  px-4  flex items-center justify-center mx-auto">
         <header className="p-2 h-14 lg:w-[90%] w-full flex items-center justify-center">
           <div className="relative h-full w-full flex items-center justify-center">
@@ -139,7 +139,7 @@ function AdminView() {
           </DialogContent>
         </Dialog>
       </div>
-      <main className="h-[calc(100%-48px)] lg:w-[900px] md:w-[720px]  flex-grow px-4 pb-4 bg-blue-100 overflow-auto">
+      <main className="h-[calc(100%-48px)] lg:w-[900px] md:w-[720px]  flex-grow px-4 pb-4 bg-white overflow-auto">
         <ScrollArea className="h-full w-full">
           <div className="flex flex-col gap-2 p-4 pt-1 overflow-auto">
             {items.map((item) => (

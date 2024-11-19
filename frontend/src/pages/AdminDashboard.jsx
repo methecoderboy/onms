@@ -1,7 +1,7 @@
 import { Power } from "lucide-react";
 import img7 from "../assets/img7.png";
 import img8 from "../assets/img8.png";
-import img9 from "../assets/img9.png";
+// import img9 from "../assets/img9.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -64,12 +64,12 @@ function AdminDashboard() {
             All Sent Notices
           </span>
         </div>
-        <div className="h-[240px] w-[330px] bg-blue-300 flex items-center  justify-center gap-4 cursor-pointer rounded-lg hover:shadow-md active:scale-95 transition-all ease-in-out duration-200 border-white border-4">
+        {/* <div className="h-[240px] w-[330px] bg-blue-300 flex items-center  justify-center gap-4 cursor-pointer rounded-lg hover:shadow-md active:scale-95 transition-all ease-in-out duration-200 border-white border-4">
           <div className="rounded-lg flex items-center justify-center overflow-hidden h-[140px] w-[140px]">
             <img src={img9} alt="img" className="h-[140px]" />
           </div>
           <span className="text-2xl font-Poppins font-medium ">Settings</span>
-        </div>
+        </div> */}
       </main>
     </div>
   );
